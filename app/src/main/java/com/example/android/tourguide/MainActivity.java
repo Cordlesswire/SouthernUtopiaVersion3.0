@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         /*
-    * This method is saving a new artist to the
-    * Firebase Realtime Database
-    * */
+       * This method is saving a new artist to the
+       * Firebase Realtime Database
+       * */
 
     private void addArtist() {
         //getting the values to save
