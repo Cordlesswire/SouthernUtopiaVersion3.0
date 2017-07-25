@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     artistList.add(artist);
 
                 }
-
-                ArtistList adapter = new ArtistList();
-
+                //Adapt data taken from the firebase database to listView
+                ArtistList adapter = new ArtistList(MainActivity.this, artistList);
+                listViewArtists.setAdapter(adapter);
             }
 
 
