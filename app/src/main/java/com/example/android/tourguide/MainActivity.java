@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        editTextName = (EditText) findViewById(R.id.editTextName);
+        buttonAdd = (Button) findViewById(R.id.buttonAddArtist);
+        spinnerGenres = (Spinner) findViewById(R.id.spinnerGenres);
 
 
     }
