@@ -32,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
         //Parse "artists" node because if left blank firebase will return the root node
         databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
 
+        //Initialise views
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
         spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
 
+
+        listViewArtists = (ListView) findViewById(R.id.listViewArtists);
 
         //Add Artist to Firebase when button is clicked
         buttonAddArtist.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +52,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Attach value event listener to the database reference object
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        /*
+
+    }
+
+
+    /*
        * This method is saving a new artist to the
        * Firebase Realtime Database
        * */
