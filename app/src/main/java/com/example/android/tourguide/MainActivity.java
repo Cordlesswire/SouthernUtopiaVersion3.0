@@ -2,25 +2,35 @@ package com.example.android.tourguide;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextName;
     Button buttonAddArtist;
-    Spinner spinnerGenres;
+    Spinner spinnerGenre;
+
+    DatabaseReference databaseArtists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Parse "artists" node because if left blank firebase will return the root node
+        databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
+
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
-        spinnerGenres = (Spinner) findViewById(R.id.spinnerGenres);
+        spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
 
 
         //Add Artist to Firebase when button is clicked
@@ -30,12 +40,47 @@ public class MainActivity extends AppCompatActivity {
                 //calling the method addArtist()
                 //the method is defined below
                 //this method is actually performing the write operation
-                // addArtist();
+                addArtist();
             }
         });
-
-
-
     }
+
+
+        /*
+    * This method is saving a new artist to the
+    * Firebase Realtime Database
+    * */
+
+    private void addArtist() {
+        //getting the values to save
+        String name = editTextName.getText().toString().trim();
+        String genre = spinnerGenre.getSelectedItem().toString();
+
+        //checking if the value is provided
+        if (!TextUtils.isEmpty(name)) {
+
+            //getting a unique id using push().getKey() method
+            //it will create a unique id and we will use it as the Primary Key for our Artist
+            String id = databaseArtists.push().getKey();
+
+            //creating an Artist Object
+            Artist artist = new Artist(id, name, genre);
+
+            //Saving the Artist
+            databaseArtists.child(id).setValue(artist);
+
+            //setting edittext to blank again
+            editTextName.setText("");
+
+            //displaying a success toast
+            Toast.makeText(this, "Artist added", Toast.LENGTH_LONG).show();
+        } else {
+            //if the value is not given displaying a toast
+            Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }
+
 
