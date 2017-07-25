@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addArtist() {
         //getting the values to save
+        //Everytime we add data to our database a new node is generated
         String name = editTextName.getText().toString().trim();
         String genre = spinnerGenre.getSelectedItem().toString();
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             //Saving the Artist
             databaseArtists.child(id).setValue(artist);
 
-            //setting edittext to blank again
+            //setting editText to blank again
             editTextName.setText("");
 
             //displaying a success toast
