@@ -10,8 +10,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +60,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        databaseArtists.addValueEventListener(new ValueEventListener() {
+            //Executed everytime we change something inside the database
+            //Use to read the values in the Firebase database as it will fetch all the values inside the specified reference
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+            }
+
+
+
+            //Executed if there is a error
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
 
     }
 
