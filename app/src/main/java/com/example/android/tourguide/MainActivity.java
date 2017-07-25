@@ -16,12 +16,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextName;
     Button buttonAddArtist;
     Spinner spinnerGenre;
     ListView listViewArtists;
+
+    //List to store Artists
+    List<Artist> artistList;
 
 
     //Database reference object
@@ -39,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonAddArtist = (Button) findViewById(R.id.buttonAddArtist);
         spinnerGenre = (Spinner) findViewById(R.id.spinnerGenres);
-
-
         listViewArtists = (ListView) findViewById(R.id.listViewArtists);
+
+        //Initialise artistList List
+        artistList = new ArrayList<>();
 
         //Add Artist to Firebase when button is clicked
         buttonAddArtist.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +72,18 @@ public class MainActivity extends AppCompatActivity {
             //Use to read the values in the Firebase database as it will fetch all the values inside the specified reference
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //Clear artistList if it contains any artists previously
+                artistList.clear();
 
+                //For loop to populate the ListView with artists in the Firebase database
+                for(DataSnapshot artistSnapshot : dataSnapshot.getChildren()){
+                    Artist artist = artistSnapshot.getValue(Artist.class);
+
+                    artistList.add(artist);
+
+                }
+
+                ArtistList adapter = new ArtistList();
 
             }
 
